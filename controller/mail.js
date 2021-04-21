@@ -59,6 +59,8 @@ exports.sendMail = async (req, res) => {
         },
       });
 
+     
+
     const newMail = {
          from: {
           name: name,
@@ -71,7 +73,10 @@ exports.sendMail = async (req, res) => {
 
         text: text,
         attachments: [
-                { path: req.file.path}
+                { path: req.file.path,
+                  filename: req.file.originalname
+
+                }
         ]
     }
 
