@@ -2,15 +2,14 @@ const express = require('express');
 const app = express();
 const router = require('./route/route')
 const { doMongo } = require('./config/db')
-const cookie = require('cookie-parser');
 const cors = require('cors');
 
 require('dotenv').config()
 app.use(cors())
 app.use(express.json())
-app.use(cookie())
 app.use(express.urlencoded({extended: true}));
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
+
 /// Connect to mongo
 doMongo();
 
