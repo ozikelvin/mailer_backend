@@ -9,7 +9,7 @@ const { getAllCoupons } = require("../utils/coupon_utils/coupon");
 
 const login = async(req, res, next) => {
     const { adminName, password } = req.body;
-    console.log(adminName)
+   
     if (!adminName || !password) return res.status(404).json({ Message: 'A required field is missing', success: false });
     if (adminName !== process.env.ADMIN_NAME || password !== process.env.ADMIN_PASS) return res.status(404).json({ Message: 'Failed to authenticate you as admin.', success: false });
 
@@ -29,7 +29,7 @@ const getDetails = async (req, res, next) => {
             coupons,
             users
         }
-        
+
         if (found) return res.status(200).json({ Message: "Got details", success: true, details });
         res.status(404).json({ Message: 'Could not get details', success: false });
     }

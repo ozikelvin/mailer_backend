@@ -50,11 +50,11 @@ const extractJWT = (req, res, next) => {
 const checkJWT = async (req, res, next) => {
 
     try {
-        console.log('rann..')
+
         const token = req.token;
         const userid = req.locals;
         const { found, user } = await findUser({ _id: userid.username });
-        console.log('rannnn')
+      
         if (!found) return res.status(404).json({ message: "Unauthorized access" });
         if (user.token.trim().toString() !== token.trim().toString()) return res.status(404).json({ message: "Unauthorized access" });
         next();

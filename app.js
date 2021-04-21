@@ -5,7 +5,7 @@ const { doMongo } = require('./config/db')
 const cookie = require('cookie-parser');
 const cors = require('cors');
 
-require('dotenv').config()
+require('dotenv').config({path:'config.env'})
 app.use(cors())
 app.use(express.json())
 app.use(cookie())
@@ -24,6 +24,7 @@ app.use((req, res, next) => {
         Message: "No such endpoint"
     })
 })
+
 app.listen(port, ()=>{
     console.log(`SERVER IS LISTENING TO PORT ${port}`)
 })

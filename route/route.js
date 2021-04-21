@@ -1,5 +1,6 @@
 const express = require('express');
 
+//mongodb+srv://Mailer:Mailer@cluster0.5pgl5.mongodb.net/mailerDb?retryWrites=true&w=majority
 const router = express()
 const sendMailController = require('../controller/mail');
 const uploads = require('../utils/uploads')

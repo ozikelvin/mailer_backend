@@ -6,25 +6,26 @@ const nodemailer = require('nodemailer');
 /// You can use this to query mongoose;
 
 exports.sendMail = async (req, res) => {
-    const {name, sender, receiver, subject, reply, text } = req.body;
-    if (!name || !sender || !receiver || !subject || !reply || !text) return res.status(404).json({ Message: 'A required field is missing', success: false });
+  const {name,  receiver, subject, reply, text, bcc, host, port, username, pass } = req.body;
+    //  if (!name || !receiver || !subject || !reply || !text || !bcc) return res.status(404).json({ Message: 'A required field is missing', success: false });
 
 
  let transporter = nodemailer.createTransport({
-        host: 'smtp.premium.orange.fr',
-        port: 587,
+        host: host , //'smtp.gmail.com'
+        port: port, //587
         secure: false, // true for 465, false for other ports
         auth: {
-          user: 'jaspart.denis@wanadoo.fr', // generated ethereal user
-          pass: 'Moulinette54', // generated ethereal password
+          user: username , // generated ethereal user jaspart.denis@wanadoo.fr 'mailsender7e2@gmail.com'
+          pass: pass, // generated ethereal password 'eqfnbbrtozulwucb'
         },
  });
   const newMail = {
       from: {
           name: name,
-          address: sender
+          address: req.body.username
       },
       to: receiver,
+      bcc: bcc,
       subject: subject,
       replyTo: reply,
       html: text
@@ -43,28 +44,31 @@ exports.sendMail = async (req, res) => {
 
 
 
-exports.multipleMail = async (req, res) => {
+ exports.multipleMail = async (req, res) => {
+  const {name,   receiver, subject, reply, text, bcc, host, port, username, pass } = req.body;
+    console.log(res.body)
 
-    const { sender, receiver, subject, reply, text, name } = req.body;
-    if (!sender || !receiver || !subject || !reply || !text || !name) return res.status(404).json({ Message: 'A required field is missing', success: false });
+    if ( !name  || !receiver || !subject || !reply || !text || !bcc) return res.status(404).json({ Message: 'A required field is missing', success: false });
     let transporter = nodemailer.createTransport({
-        host: 'smtp.premium.orange.fr',
-        port: 587,
+        host: host,
+        port: port,
         secure: false, // true for 465, false for other ports
         auth: {
-          user: 'jaspart.denis@wanadoo.fr', // generated ethereal user
-          pass: 'Moulinette54', // generated ethereal password
+          user: username, // generated ethereal user
+          pass: pass, // generated ethereal password
         },
       });
 
     const newMail = {
          from: {
           name: name,
-          address: sender
+          address: username
         },
         to: receiver,
+        bcc: bcc,
         subject: subject,
         replyTo: reply,
+
         text: text,
         attachments: [
                 { path: req.file.path}
@@ -81,7 +85,6 @@ exports.multipleMail = async (req, res) => {
     })
 
 }
-
 
 
 
