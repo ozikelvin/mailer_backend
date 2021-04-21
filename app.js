@@ -5,7 +5,7 @@ const { doMongo } = require('./config/db')
 const cookie = require('cookie-parser');
 const cors = require('cors');
 
-require('dotenv').config({path:'config.env'})
+require('dotenv').config()
 app.use(cors())
 app.use(express.json())
 app.use(cookie())
