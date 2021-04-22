@@ -4,7 +4,8 @@
 const { signJWT } = require("../utils/jwtHelpers")
 const { updateUser, findUser } = require("../utils/user_utils/user");
 const { updateCoupon, findCoupon } = require("../utils/coupon_utils/coupon");
-
+const moment = require('moment');
+const checkSub = require('../utils/expireCheck');
 
 
 exports.signUp = async(req, res)=>{
@@ -23,11 +24,12 @@ exports.signUp = async(req, res)=>{
     if (couponFound.isUsed) return res.status(404).json({ Message: 'This coupon is no longer valid.', success: false });
     if (foundCoupon) console.log(foundCoupon);
     const hash = await bcrypt.hash(password, 10);
+    const timeOfReg = moment().add(3, 'days')
     const newUser = new User({
         name: name,
         email: email,
         password: hash,
-        registrationMonth: +(new Date().getMonth())
+        registrationDay: timeOfReg.toISOString()
     })
      console.log("here")
     await newUser.save()
@@ -48,12 +50,12 @@ exports.login = async (req, res)=>{
     const {email, password } = req.body
     if (!email || !password) return res.status(404).json({ Message: 'A required field is missing', success: false });
     const { found, user } = await findUser({ email });
-     if (!found) return res.status(401).json({ Message: 'Wrong Username or password', success: false })
-
-    if (+(new Date().getMonth()) - user.registrationMonth > 2) return res.status(404).json({ Message: 'Your coupon has expired.', success: false });
-
-    if (Number(user.expires) - Date.now() <= 0) return res.json({ Message: 'Recharge', success: false, expired: true })
-
+    console.log(found)
+     if (!found) return res.status(401).json({ Message: 'Wrong Username or password', success: false });
+    const timeOfLog = moment()
+    const check = checkSub(timeOfLog.toISOString(), user.registrationDay);
+    if(!check) return res.status(404).json({Message:'Your Sub Don Finish', success:false});
+    console.log('bcrypt Ran... this should not work')
     await bcrypt.compare(password, user.password).then((done) => {
 
         if (!done) return res.status(401).json({ Message: 'Wrong Username or password', success: false });

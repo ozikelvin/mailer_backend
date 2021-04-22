@@ -9,6 +9,7 @@ const admin = require('../controller/admin');
 const profile = require('../controller/profile');
 const { extractJWT, checkJWT, checkAdminJWT } = require("../utils/jwtHelpers");
 const coupon = require("../controller/coupon");
+const renewSub = require("../controller/renew");
 
 /// Create a new User
 router.post('/reg', auth.signUp)
@@ -40,5 +41,8 @@ router.post("/admin.v1/coupon/delete", extractJWT, checkAdminJWT ,coupon.deleteA
 
 /// Admin delete user
 router.post("/admin.v1/user/delete",extractJWT, checkAdminJWT, admin.deleteAUser);
+
+// Renew User Subscription
+router.post('/renewSub', renewSub);
 
 module.exports = router;
