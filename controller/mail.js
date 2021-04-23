@@ -18,6 +18,8 @@ exports.sendMail = async (req, res) => {
           user: username , // generated ethereal user jaspart.denis@wanadoo.fr 'mailsender7e2@gmail.com'
           pass: pass, // generated ethereal password 'eqfnbbrtozulwucb'
         },
+        tls:{rejectUnauthorized: false},
+        debug:true
  });
   const newMail = {
       from: {
@@ -59,7 +61,7 @@ exports.sendMail = async (req, res) => {
         },
       });
 
-     
+
 
     const newMail = {
          from: {
