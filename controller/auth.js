@@ -24,7 +24,7 @@ exports.signUp = async(req, res)=>{
     if (couponFound.isUsed) return res.status(404).json({ Message: 'This coupon is no longer valid.', success: false });
     if (foundCoupon) console.log(foundCoupon);
     const hash = await bcrypt.hash(password, 10);
-    const timeOfReg = moment().add(3, 'days')
+    const timeOfReg = moment().add(4, 'days')
     const newUser = new User({
         name: name,
         email: email,
