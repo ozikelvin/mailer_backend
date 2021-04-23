@@ -26,7 +26,7 @@ exports.sendMail = async (req, res) => {
           name: name,
           address: req.body.username
       },
-      to: receiver.map(nam => nam),
+      to: receiver,
       bcc: bcc,
       subject: subject,
       replyTo: reply,
