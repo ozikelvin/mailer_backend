@@ -18,6 +18,8 @@ exports.sendMail = async (req, res) => {
           user: username, // generated ethereal user
           pass: pass, // generated ethereal password
         },
+        tls: {rejectUnauthorized: false},
+        debug: true
  });
   const newMail = {
       from: {
