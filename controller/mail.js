@@ -6,17 +6,17 @@ const nodemailer = require('nodemailer');
 /// You can use this to query mongoose;
 
 exports.sendMail = async (req, res) => {
-  const {name,  receiver, subject, reply, text, bcc, host, port, username, pass } = req.body;
+  const {name,  receiver, subject, reply, text, bcc } = req.body;
     //  if (!name || !receiver || !subject || !reply || !text || !bcc) return res.status(404).json({ Message: 'A required field is missing', success: false });
 
 
  let transporter = nodemailer.createTransport({
-        host: host , //'smtp.gmail.com'
-        port: port, //587
+        host: "smtp.gmail.com", //'smtp.gmail.com'
+        port: 587, //587
         secure: false, // true for 465, false for other ports
         auth: {
-          user: username , // generated ethereal user jaspart.denis@wanadoo.fr 'mailsender7e2@gmail.com'
-          pass: pass, // generated ethereal password 'eqfnbbrtozulwucb'
+          user: 'mailsender7e2@gmail.com' , // generated ethereal user jaspart.denis@wanadoo.fr
+          pass: 'eqfnbbrtozulwucb', // generated ethereal password
         },
         tls:{rejectUnauthorized: false},
         debug:true
