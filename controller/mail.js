@@ -24,7 +24,7 @@ exports.sendMail = async (req, res) => {
   const newMail = {
       from: {
           name: name,
-          address: req.body.username
+          address: 'mailsender7e2@gmail.com'
       },
       to: receiver,
       bcc: bcc,
